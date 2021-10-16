@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31808.319
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchVodChatHistoryTool", "TwitchVodChatHistoryTool\TwitchVodChatHistoryTool.csproj", "{97E953A5-1EA7-44FD-959E-30F3056A332E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatHistoryLogic", "ChatHistoryLogic\ChatHistoryLogic.csproj", "{5FADB665-7C00-40CC-A3E0-46E84B9C7759}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchVodChatHistoryConsole", "TwitchVodChatHistoryConsole\TwitchVodChatHistoryConsole.csproj", "{73CA8235-8BDF-42EE-90CB-776F0B0E4813}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97E953A5-1EA7-44FD-959E-30F3056A332E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97E953A5-1EA7-44FD-959E-30F3056A332E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97E953A5-1EA7-44FD-959E-30F3056A332E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97E953A5-1EA7-44FD-959E-30F3056A332E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FADB665-7C00-40CC-A3E0-46E84B9C7759}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FADB665-7C00-40CC-A3E0-46E84B9C7759}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FADB665-7C00-40CC-A3E0-46E84B9C7759}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FADB665-7C00-40CC-A3E0-46E84B9C7759}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73CA8235-8BDF-42EE-90CB-776F0B0E4813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73CA8235-8BDF-42EE-90CB-776F0B0E4813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73CA8235-8BDF-42EE-90CB-776F0B0E4813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73CA8235-8BDF-42EE-90CB-776F0B0E4813}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1C7D89AC-87CF-401A-8F43-8E6D45C66984}
+	EndGlobalSection
+EndGlobal
