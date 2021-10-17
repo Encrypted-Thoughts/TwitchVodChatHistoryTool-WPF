@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TwitchVodChatHistoryConsole": {
+      "commandName": "Project",
+      "commandLineArgs": "-c encryptedthoughts,RNJoy"
+    }
+  }
+}

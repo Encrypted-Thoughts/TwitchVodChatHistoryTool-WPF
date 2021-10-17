@@ -1,4 +1,7 @@
 ﻿using CommandLine;
+using ChatHistory;
+using System;
+using System.Linq;
 
 namespace TwitchVodChatHistoryConsole
 {
@@ -6,24 +9,37 @@ namespace TwitchVodChatHistoryConsole
     {
         public class Options
         {
-            [Option('v', "verbose", Required = false, HelpText = "Set output to verbose messages.")]
-            public bool Verbose { get; set; }
+            [Option('c', "channels", Required = true, SetName = "channel", HelpText = "Channel(s) for which to get chat history. Separate users by commas. Ex: \"encryptedthoughts,ninja,someothertwitchuser\"")]
+            public string Channels { get; set; }
+
+            [Option('v', "videos", Required = true, SetName = "vod", HelpText = "Videos(s) for which to get chat history. Separate videos by commas. Ex: \"1234567890,1234567891,1234567892\"")]
+            public string Videos { get; set; }
         }
 
         static void Main(string[] args)
         {
             Parser.Default.ParseArguments<Options>(args)
-            .WithParsed<Options>(o =>
+            .WithParsed(o =>
             {
-                if (o.Verbose)
+                if (o.Channels != null)
                 {
-                    Console.WriteLine($"Verbose output enabled. Current Arguments: -v {o.Verbose}");
-                    Console.WriteLine("Quick Start Example! App is in Verbose mode!");
+                    Console.WriteLine($"Channels: {o.Channels}");
+                    var chatHistoryHelper = new ChatHistoryLogic();
+                    var videos = chatHistoryHelper.GetChatHistoryByVideo(o.Channels.Split(',', StringSplitOptions.TrimEntries).ToList());
+
+                    foreach(var video in videos)
+                    {
+                        Console.WriteLine($"{video.Title}");
+                        foreach(var comment in video.Comments)
+                        {
+                            Console.WriteLine($"{comment.Timestamp} {comment.Username}: {comment.Message}");
+                        }
+                        Console.WriteLine("");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine($"Current Arguments: -v {o.Verbose}");
-                    Console.WriteLine("Quick Start Example!");
+                    Console.WriteLine($"Videos: {o.Videos}");
                 }
             });
         }
