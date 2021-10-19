@@ -1,5 +1,6 @@
 ﻿using ChatHistory;
 using ChatHistory.Models;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
@@ -24,39 +25,55 @@ namespace TwitchVodChatHistoryTool
             if (VideosListBox.SelectedItem is Video video)
             {
                 var worker = new BackgroundWorker();
-                worker.DoWork += worker_GetComments;
-                worker.RunWorkerCompleted += worker_HideProgressBar;
-                worker.RunWorkerAsync(argument: video);
+                worker.DoWork += Worker_GetComments;
+                worker.RunWorkerCompleted += Worker_HideProgressBar;
+
                 ProgressBar.IsIndeterminate = true;
+                worker.RunWorkerAsync(argument: video);
             }
         }
 
         private void GetVideosButton_Click(object sender, RoutedEventArgs e)
         {
             var worker = new BackgroundWorker();
-            worker.DoWork += worker_GetVideos;
-            worker.RunWorkerCompleted += worker_HideProgressBar;
-            worker.RunWorkerAsync();
+            worker.DoWork += Worker_GetVideos;
+            worker.RunWorkerCompleted += Worker_HideProgressBar;
+
             ProgressBar.IsIndeterminate = true;
+            worker.RunWorkerAsync();
         }
 
-        private void worker_GetVideos(object sender, DoWorkEventArgs e)
+        private void Worker_GetVideos(object sender, DoWorkEventArgs e)
         {
-            var ChatHistoryHelper = new ChatHistoryLogic(accessToken: context.AccessToken);
-            var videos = ChatHistoryHelper.GetVideos(new() { context.Username.Trim() });
-            context.Videos = videos;
-        }
-
-        private void worker_GetComments(object sender, DoWorkEventArgs e)
-        {
-            if (e.Argument is Video video)
+            try
             {
                 var ChatHistoryHelper = new ChatHistoryLogic(accessToken: context.AccessToken);
-                context.Comments = ChatHistoryHelper.GetVideoComments(video.Id);
+                var videos = ChatHistoryHelper.GetVideos(new() { context.Username.Trim() });
+                context.Videos = videos;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
-        private void worker_HideProgressBar(object sender, RunWorkerCompletedEventArgs e)
+        private void Worker_GetComments(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                if (e.Argument is Video video)
+                {
+                    var ChatHistoryHelper = new ChatHistoryLogic(accessToken: context.AccessToken);
+                    context.Comments = ChatHistoryHelper.GetVideoComments(video.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void Worker_HideProgressBar(object sender, RunWorkerCompletedEventArgs e)
         {
             ProgressBar.IsIndeterminate = false;
         }
