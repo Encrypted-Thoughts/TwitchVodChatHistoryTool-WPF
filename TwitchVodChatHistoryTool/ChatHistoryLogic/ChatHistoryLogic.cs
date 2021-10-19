@@ -30,21 +30,27 @@ namespace ChatHistory
             Api.Settings.AccessToken = AccessToken;
             var userList = Api.Helix.Users.GetUsersAsync(logins: users).Result;
 
+            string? cursor = null;
             foreach (var user in userList.Users)
             {
-                var videos = Api.Helix.Videos.GetVideoAsync(userId: user.Id, first: 100).Result;
-                foreach (var video in videos.Videos)
+                do
                 {
-                    var timestamp = DateTime.Parse(video.CreatedAt).ToLocalTime();
-                    var newVideo = new Video
+                    var videos = Api.Helix.Videos.GetVideoAsync(userId: user.Id, first: 100, after: cursor).Result;
+                    foreach (var video in videos.Videos)
                     {
-                        Id = video.Id,
-                        Title = timestamp.ToShortDateString() + ": " + video.Title,
-                        CreationDate = timestamp
-                    };
-                    history.Add(newVideo);
-                }
+                        var timestamp = DateTime.Parse(video.CreatedAt).ToLocalTime();
+                        var newVideo = new Video
+                        {
+                            Id = video.Id,
+                            Title = timestamp.ToShortDateString() + ": " + video.Title,
+                            CreationDate = timestamp
+                        };
+                        history.Add(newVideo);
+                    }
+                    cursor = videos.Pagination.Cursor;
+                } while (cursor != null);
             }
+
             return history;
         }
 
@@ -56,21 +62,26 @@ namespace ChatHistory
             Api.Settings.AccessToken = AccessToken;
             var userList = Api.Helix.Users.GetUsersAsync(logins: users).Result;
 
+            string? cursor = null;
             foreach (var user in userList.Users)
             {
-                var videos = Api.Helix.Videos.GetVideoAsync(userId: user.Id, first: 100).Result;
-                foreach (var video in videos.Videos)
+                do
                 {
-                    var timestamp = DateTime.Parse(video.CreatedAt).ToLocalTime();
-                    var newVideo = new Video
+                    var videos = Api.Helix.Videos.GetVideoAsync(userId: user.Id, first: 100, after: cursor).Result;
+                    foreach (var video in videos.Videos)
                     {
-                        Id = video.Id,
-                        Title = timestamp.ToShortDateString() + ": " + video.Title,
-                        CreationDate = timestamp
-                    };
-                    newVideo.Comments = GetVideoComments(newVideo.Id);
-                    history.Add(newVideo);
-                }
+                        var timestamp = DateTime.Parse(video.CreatedAt).ToLocalTime();
+                        var newVideo = new Video
+                        {
+                            Id = video.Id,
+                            Title = timestamp.ToShortDateString() + ": " + video.Title,
+                            CreationDate = timestamp
+                        };
+                        newVideo.Comments = GetVideoComments(newVideo.Id);
+                        history.Add(newVideo);
+                    }
+                    cursor = videos.Pagination.Cursor;
+                } while (cursor != null);
             }
 
             return history;

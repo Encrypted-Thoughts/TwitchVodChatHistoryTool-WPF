@@ -24,7 +24,7 @@ namespace TwitchVodChatHistoryConsole
                 if (o.Channels != null)
                 {
                     Console.WriteLine($"Channels: {o.Channels}");
-                    var chatHistoryHelper = new ChatHistoryLogic("vcv0nh16h9bwbl4cv0r3fhecna7c99");
+                    var chatHistoryHelper = new ChatHistoryLogic("vzmvlj39dw5afaub662qucxvxw5t3k", "icyqwwpy744ugu5x4ymyt6jqrnpxso");
                     var videos = chatHistoryHelper.GetChatHistoryByVideo(o.Channels.Split(',', StringSplitOptions.TrimEntries).ToList());
 
                     foreach(var video in videos)
