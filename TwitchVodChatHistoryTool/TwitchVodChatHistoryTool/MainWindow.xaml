@@ -29,19 +29,19 @@
                     <Button Grid.Column="0" x:Name="GetAccessTokenButton" Content="Get Token" HorizontalAlignment="Left" VerticalAlignment="Center" Height="24" Click="GetAccessTokenButton_Click" Width="70" Grid.ColumnSpan="2"/>
                     <TextBox Grid.Column="1" x:Name="AccessTokenTextBox" mah:TextBoxHelper.Watermark="Enter Access Token" Text="{Binding AccessToken, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" VerticalAlignment="Center" Margin="10,0,0,0"/>
                 </Grid>
-                <TextBox x:Name="UsernameText" mah:TextBoxHelper.Watermark="Enter Username" Margin="0,31,0,0" Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" VerticalAlignment="Top" Height="25" IsEnabled="{Binding AccessTokenSet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button x:Name="GetVideosButton" Content="Populate VOD List" Margin="0,62,0,0" VerticalAlignment="Top" Click="GetVideosButton_Click" Height="20" Grid.Row="0" IsEnabled="{Binding AccessTokenSet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox x:Name="UsernameText" mah:TextBoxHelper.Watermark="Enter Username" Margin="0,31,0,0" Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" VerticalAlignment="Top" Height="25"/>
+                <Button x:Name="GetVideosButton" Content="Populate VOD List" Margin="0,62,0,0" VerticalAlignment="Top" Click="GetVideosButton_Click" Height="20" Grid.Row="0" IsEnabled="{Binding AllowVODLookup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Grid Margin="0,125,0,0" Height="30" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50*"/>
                         <ColumnDefinition Width="50*"/>
                     </Grid.ColumnDefinitions>
-                    <mah:DateTimePicker Grid.Column="0" mah:TextBoxHelper.Watermark="Start time filter..." SelectedDateTime="{Binding VideoStartFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding AccessTokenSet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  IsClockVisible="False"/>
-                    <mah:DateTimePicker Grid.Column="1" mah:TextBoxHelper.Watermark="End time filter..." SelectedDateTime="{Binding VideoEndFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding AccessTokenSet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
+                    <mah:DateTimePicker Grid.Column="0" mah:TextBoxHelper.Watermark="Start time filter..." SelectedDateTime="{Binding VideoStartFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding AllowVODLookup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  IsClockVisible="False"/>
+                    <mah:DateTimePicker Grid.Column="1" mah:TextBoxHelper.Watermark="End time filter..." SelectedDateTime="{Binding VideoEndFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding AllowVODLookup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
                 </Grid>
-                <TextBox x:Name="VODFilterTextBox" mah:TextBoxHelper.Watermark="Filter on VOD name..." Text="{Binding VideoTitleFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,94,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" IsEnabled="{Binding AccessTokenSet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <ListBox x:Name="VideosListBox" SelectionChanged="ListBox_SelectionChanged" ItemsSource="{Binding FilteredVideos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Title" Margin="0,160,0,0" IsEnabled="{Binding AccessTokenSet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox x:Name="VODFilterTextBox" mah:TextBoxHelper.Watermark="Filter on VOD name..." Text="{Binding VideoTitleFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,94,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" IsEnabled="{Binding AllowVODLookup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <ListBox x:Name="VideosListBox" SelectionChanged="ListBox_SelectionChanged" ItemsSource="{Binding FilteredVideos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Title" Margin="0,160,0,0" IsEnabled="{Binding AllowVODLookup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
 
             <GridSplitter Grid.Column="1" ResizeDirection="Columns" Width="2" Margin="0,5,0,5" HorizontalAlignment="Center"/>
@@ -56,8 +56,8 @@
                         <ColumnDefinition Width="275*"/>
                         <ColumnDefinition Width="275*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="UsernameFilterTextbox" Grid.Column="0" mah:TextBoxHelper.Watermark="Filter on username..." Text="{Binding CommentUsernameFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" IsEnabled="{Binding AccessTokenSet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="25" VerticalAlignment="Top"/>
-                    <TextBox x:Name="MessageFilterTextBox" Grid.Column="1" mah:TextBoxHelper.Watermark="Filter on message..." Text="{Binding CommentMessageFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" IsEnabled="{Binding AccessTokenSet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0" Height="25" VerticalAlignment="Top"/>
+                    <TextBox x:Name="UsernameFilterTextbox" Grid.Column="0" mah:TextBoxHelper.Watermark="Filter on username..." Text="{Binding CommentUsernameFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" IsEnabled="{Binding AllowVODLookup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="25" VerticalAlignment="Top"/>
+                    <TextBox x:Name="MessageFilterTextBox" Grid.Column="1" mah:TextBoxHelper.Watermark="Filter on message..." Text="{Binding CommentMessageFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" IsEnabled="{Binding AllowVODLookup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0" Height="25" VerticalAlignment="Top"/>
                 </Grid>
                 <DataGrid ItemsSource="{Binding FilteredComments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" Grid.Row="1"/>
             </Grid>

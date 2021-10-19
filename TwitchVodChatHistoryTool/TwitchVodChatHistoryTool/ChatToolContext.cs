@@ -19,7 +19,7 @@ namespace TwitchVodChatHistoryTool
         private string m_commentUsernameFilter = "";
         private string m_commentMessageFilter = "";
         private string m_accessToken = "";
-        private bool m_accessTokenSet = false;
+        private bool m_allowVODLookup = false;
 
         public string Username
         {
@@ -27,6 +27,7 @@ namespace TwitchVodChatHistoryTool
             set
             {
                 m_username = value;
+                AllowVODLookup = !string.IsNullOrWhiteSpace(AccessToken) && !string.IsNullOrWhiteSpace(m_username);
                 NotifyPropertyChanged("Username");
             }
         }
@@ -134,18 +135,18 @@ namespace TwitchVodChatHistoryTool
             set
             {
                 m_accessToken = value;
-                AccessTokenSet = !string.IsNullOrWhiteSpace(m_accessToken);
+                AllowVODLookup = !string.IsNullOrWhiteSpace(m_accessToken) && !string.IsNullOrWhiteSpace(Username);
                 NotifyPropertyChanged("AccessToken");
             }
         }
 
-        public bool AccessTokenSet
+        public bool AllowVODLookup
         {
-            get => m_accessTokenSet;
+            get => m_allowVODLookup;
             set
             {
-                m_accessTokenSet = value;
-                NotifyPropertyChanged("AccessTokenSet");
+                m_allowVODLookup = value;
+                NotifyPropertyChanged("AllowVODLookup");
             }
         }
 
