@@ -2,4 +2,4 @@
 
 A tool to try and simplify viewing and searching through chat history on VODs.
 
-![image](https://user-images.githubusercontent.com/50642352/137825558-2873a23c-688e-4ba4-8428-9e53d1d9c35b.png)
+![image](https://user-images.githubusercontent.com/50642352/137837594-85f6c23a-2f49-414c-86c2-05504e4e08ae.png)
