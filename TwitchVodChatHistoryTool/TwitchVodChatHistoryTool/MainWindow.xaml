@@ -8,6 +8,10 @@
         mc:Ignorable="d"
         Title="Twitch Vod Chat History Tool" Height="600" Width="1000" Background="White">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="595*"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300"/>
@@ -15,7 +19,7 @@
                 <ColumnDefinition Width="690*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Margin="5,5,0,5" Grid.Column="0">
+            <Grid Margin="5,5,0,0" Grid.Column="0">
                 <Grid VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="65"/>
@@ -41,7 +45,7 @@
 
             <GridSplitter Grid.Column="1" ResizeDirection="Columns" Width="2" Margin="0,5,0,5" HorizontalAlignment="Center"/>
 
-            <Grid Grid.Column="2" Margin="0,5,5,5">
+            <Grid Grid.Column="2" Margin="0,5,5,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="300*"/>
@@ -58,5 +62,6 @@
             </Grid>
         </Grid>
 
+        <ProgressBar Grid.Row="1" Name="ProgressBar" Height="5" Margin="0,0,0,0" VerticalAlignment="Bottom" IsIndeterminate="False"/>
     </Grid>
 </Window>

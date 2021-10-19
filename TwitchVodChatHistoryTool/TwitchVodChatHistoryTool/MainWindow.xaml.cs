@@ -33,16 +33,44 @@ namespace TwitchVodChatHistoryTool
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var ChatHistoryHelper = new ChatHistoryLogic(accessToken: context.AccessToken);
-            if (VideosListBox.SelectedItem is Video selected)
-                context.Comments = ChatHistoryHelper.GetVideoComments(selected.Id);
+            if (VideosListBox.SelectedItem is Video video)
+            {
+                var worker = new BackgroundWorker();
+                worker.DoWork += worker_GetComments;
+                worker.RunWorkerCompleted += worker_HideProgressBar;
+                worker.RunWorkerAsync(argument: video);
+                ProgressBar.IsIndeterminate = true;
+            }
         }
 
         private void GetVideosButton_Click(object sender, RoutedEventArgs e)
         {
+            var worker = new BackgroundWorker();
+            worker.DoWork += worker_GetVideos;
+            worker.RunWorkerCompleted += worker_HideProgressBar;
+            worker.RunWorkerAsync();
+            ProgressBar.IsIndeterminate = true;
+        }
+
+        private void worker_GetVideos(object sender, DoWorkEventArgs e)
+        {
             var ChatHistoryHelper = new ChatHistoryLogic(accessToken: context.AccessToken);
             var videos = ChatHistoryHelper.GetVideos(new() { context.Username.Trim() });
             context.Videos = videos;
+        }
+
+        private void worker_GetComments(object sender, DoWorkEventArgs e)
+        {
+            if (e.Argument is Video video)
+            {
+                var ChatHistoryHelper = new ChatHistoryLogic(accessToken: context.AccessToken);
+                context.Comments = ChatHistoryHelper.GetVideoComments(video.Id);
+            }
+        }
+
+        private void worker_HideProgressBar(object sender, RunWorkerCompletedEventArgs e)
+        {
+            ProgressBar.IsIndeterminate = false;
         }
 
         private void GetAccessTokenButton_Click(object sender, RoutedEventArgs e)
