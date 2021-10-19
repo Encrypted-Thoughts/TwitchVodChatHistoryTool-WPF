@@ -43,7 +43,7 @@ namespace TwitchVodChatHistoryTool
             worker.RunWorkerAsync();
         }
 
-        private void Worker_GetVideos(object sender, DoWorkEventArgs e)
+        private void Worker_GetVideos(object? sender, DoWorkEventArgs e)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace TwitchVodChatHistoryTool
             }
         }
 
-        private void Worker_GetComments(object sender, DoWorkEventArgs e)
+        private void Worker_GetComments(object? sender, DoWorkEventArgs e)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace TwitchVodChatHistoryTool
             }
         }
 
-        private void Worker_HideProgressBar(object sender, RunWorkerCompletedEventArgs e)
+        private void Worker_HideProgressBar(object? sender, RunWorkerCompletedEventArgs e)
         {
             ProgressBar.IsIndeterminate = false;
         }
