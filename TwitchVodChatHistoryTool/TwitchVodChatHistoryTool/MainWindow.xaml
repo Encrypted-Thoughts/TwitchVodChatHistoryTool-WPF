@@ -3,24 +3,59 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:TwitchVodChatHistoryTool"
         mc:Ignorable="d"
-        Title="Twitch Vod Chat History Tool" Height="450" Width="800">
+        Title="Twitch Vod Chat History Tool" Height="600" Width="1000" Background="White">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="57*"/>
-        </Grid.RowDefinitions>
-        <TextBox Name="UsernamesText"  Margin="61,0,5,0" Text="{Binding Usernames, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Center" Height="18"/>
-        <Button Name="CommentsDataGrid" Content="Populate" Margin="5,0,0,0" VerticalAlignment="Center" Click="Button_Click" HorizontalAlignment="Left" Width="51" Height="20"/>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250"/>
-                <ColumnDefinition Width="550*"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="690*"/>
             </Grid.ColumnDefinitions>
-            <ListBox x:Name="VideosListBox" SelectionChanged="ListBox_SelectionChanged" ItemsSource="{Binding Videos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Title" Grid.Column="0" Margin="0,0,5,0"/>
-            <GridSplitter ResizeDirection="Columns" Width="5"/>
-            <DataGrid Grid.Column="1" ItemsSource="{Binding Comments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False"/>
+
+            <Grid Margin="5,5,0,5" Grid.Column="0">
+                <Grid VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="65"/>
+                        <ColumnDefinition Width="100*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" x:Name="GetAccessTokenButton" Content="Get Token" HorizontalAlignment="Left" VerticalAlignment="Center" Height="24" Click="GetAccessTokenButton_Click" Width="60"/>
+                    <xctk:WatermarkTextBox Grid.Column="1" x:Name="AccessTokenTextBox" Watermark="Enter Access Token" Text="{Binding AccessToken, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" VerticalAlignment="Center"/>
+                </Grid>
+                <xctk:WatermarkTextBox x:Name="UsernameText" Watermark="Enter Username" Margin="0,30,0,0" Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" VerticalAlignment="Top" Height="25" IsEnabled="{Binding AccessTokenSet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button x:Name="GetVideosButton" Content="Populate VOD List" Margin="0,60,0,0" VerticalAlignment="Top" Click="GetVideosButton_Click" Height="20" Grid.Row="0" IsEnabled="{Binding AccessTokenSet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Grid Margin="0,114,0,0" Height="24" VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+                    <xctk:DateTimePicker Grid.Column="0" Watermark="Start time filter..." Value="{Binding VideoStartFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding AccessTokenSet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,4,0"/>
+                    <xctk:DateTimePicker Grid.Column="1" Watermark="End time filter..." Value="{Binding VideoEndFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding AccessTokenSet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2,0,0,0"/>
+                </Grid>
+                <xctk:WatermarkTextBox x:Name="VODFilterTextBox" Watermark="Filter on VOD name..." Text="{Binding VideoTitleFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,85,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" IsEnabled="{Binding AccessTokenSet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <ListBox x:Name="VideosListBox" SelectionChanged="ListBox_SelectionChanged" ItemsSource="{Binding FilteredVideos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Title" Margin="0,143,0,0" IsEnabled="{Binding AccessTokenSet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+
+            <GridSplitter Grid.Column="1" ResizeDirection="Columns" Width="2" Margin="0,5,0,5" HorizontalAlignment="Center"/>
+
+            <Grid Grid.Column="2" Margin="0,5,5,5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="300*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Height="25">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="275*"/>
+                        <ColumnDefinition Width="275*"/>
+                    </Grid.ColumnDefinitions>
+                    <xctk:WatermarkTextBox x:Name="UsernameFilterTextbox" Watermark="Filter on username..." Text="{Binding CommentUsernameFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Margin="0,0,5,0" TextWrapping="NoWrap" IsEnabled="{Binding AccessTokenSet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <xctk:WatermarkTextBox x:Name="MessageFilterTextBox" Watermark="Filter on message..." Text="{Binding CommentMessageFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" TextWrapping="NoWrap" IsEnabled="{Binding AccessTokenSet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+                <DataGrid Grid.Row="1" ItemsSource="{Binding FilteredComments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" Margin="0,5,0,0"/>
+            </Grid>
         </Grid>
 
     </Grid>

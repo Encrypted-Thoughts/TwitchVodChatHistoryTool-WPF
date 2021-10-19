@@ -13,29 +13,34 @@ namespace ChatHistory
 {
     public class ChatHistoryLogic
     {
-        private readonly TwitchAPI Api = new();
         public string ClientId { get; set; }
+        public string AccessToken { get; set; }
 
-        public ChatHistoryLogic(string cliendId = "qbij4eq1e5q9pce0lqp7qxh94vwk2g")
+        public ChatHistoryLogic(string accessToken = "", string cliendId = "icyqwwpy744ugu5x4ymyt6jqrnpxso")
         {
-            Api.Settings.ClientId = cliendId;
             ClientId = cliendId;
+            AccessToken = accessToken;
         }
 
         public List<Video> GetVideos(List<string> users)
         {
             var history = new List<Video>();
+            var Api = new TwitchAPI();
+            Api.Settings.ClientId = ClientId;
+            Api.Settings.AccessToken = AccessToken;
+            var userList = Api.Helix.Users.GetUsersAsync(logins: users).Result;
 
-            foreach (var user in users)
+            foreach (var user in userList.Users)
             {
-                var userInfo = Api.V5.Users.GetUserByNameAsync(user).Result;
-                var videos = Api.V5.Channels.GetChannelVideosAsync(userInfo.Matches.First().Id, limit: 100).Result;
+                var videos = Api.Helix.Videos.GetVideoAsync(userId: user.Id, first: 100).Result;
                 foreach (var video in videos.Videos)
                 {
+                    var timestamp = DateTime.Parse(video.CreatedAt).ToLocalTime();
                     var newVideo = new Video
                     {
-                        Id = video.Id.TrimStart('v'),
-                        Title = video.Title
+                        Id = video.Id,
+                        Title = timestamp.ToShortDateString() + ": " + video.Title,
+                        CreationDate = timestamp
                     };
                     history.Add(newVideo);
                 }
@@ -46,17 +51,22 @@ namespace ChatHistory
         public List<Video> GetChatHistoryByVideo(List<string> users)
         {
             var history = new List<Video>();
+            var Api = new TwitchAPI();
+            Api.Settings.ClientId = ClientId;
+            Api.Settings.AccessToken = AccessToken;
+            var userList = Api.Helix.Users.GetUsersAsync(logins: users).Result;
 
-            foreach (var user in users)
+            foreach (var user in userList.Users)
             {
-                var userInfo = Api.V5.Users.GetUserByNameAsync(user).Result;
-                var videos = Api.V5.Channels.GetChannelVideosAsync(userInfo.Matches.First().Id, limit: 0).Result;
+                var videos = Api.Helix.Videos.GetVideoAsync(userId: user.Id, first: 100).Result;
                 foreach (var video in videos.Videos)
                 {
+                    var timestamp = DateTime.Parse(video.CreatedAt).ToLocalTime();
                     var newVideo = new Video
                     {
-                        Id = video.Id.TrimStart('v'),
-                        Title = video.Title
+                        Id = video.Id,
+                        Title = timestamp.ToShortDateString() + ": " + video.Title,
+                        CreationDate = timestamp
                     };
                     newVideo.Comments = GetVideoComments(newVideo.Id);
                     history.Add(newVideo);
@@ -84,7 +94,7 @@ namespace ChatHistory
                     {
                         var simplified = new SimplifiedComment
                         {
-                            Timestamp = comment.CreatedAt,
+                            Timestamp = comment.CreatedAt.ToLocalTime(),
                             Username = comment.Commenter.DisplayName,
                             Message = comment.Message.Body
                         };
@@ -112,6 +122,7 @@ namespace ChatHistory
     {
         public string Id { get; set; }
         public string Title { get; set; }
+        public DateTime CreationDate { get; set; }
         public List<SimplifiedComment> Comments { get; set; }
     }
 
