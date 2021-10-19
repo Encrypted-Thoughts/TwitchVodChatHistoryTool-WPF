@@ -59,7 +59,7 @@
                     <TextBox x:Name="UsernameFilterTextbox" Grid.Column="0" mah:TextBoxHelper.Watermark="Filter on username..." Text="{Binding CommentUsernameFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" Height="25" VerticalAlignment="Top"/>
                     <TextBox x:Name="MessageFilterTextBox" Grid.Column="1" mah:TextBoxHelper.Watermark="Filter on message..." Text="{Binding CommentMessageFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" Margin="5,0,0,0" Height="25" VerticalAlignment="Top"/>
                 </Grid>
-                <DataGrid ItemsSource="{Binding FilteredComments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" Grid.Row="1"/>
+                <DataGrid ItemsSource="{Binding FilteredComments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" Grid.Row="1" IsReadOnly="True"/>
             </Grid>
         </Grid>
 
