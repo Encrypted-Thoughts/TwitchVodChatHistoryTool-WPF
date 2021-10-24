@@ -39,7 +39,7 @@ namespace ChatHistory
                         var newVideo = new Video
                         {
                             Id = video.Id,
-                            Title = timestamp.ToShortDateString() + ": " + video.Title,
+                            Title = timestamp.ToShortDateString() + ": " + video.Title.Trim(),
                             CreationDate = timestamp
                         };
                         history.Add(newVideo);
