@@ -18,7 +18,7 @@ namespace TwitchVodChatHistoryTool
     /// </summary>
     public partial class MainWindow
     {
-        public ChatToolContext context = new();
+        #region Windows 11 Corner Rounding
         public enum DWMWINDOWATTRIBUTE
         {
             DWMWA_WINDOW_CORNER_PREFERENCE = 33
@@ -40,15 +40,20 @@ namespace TwitchVodChatHistoryTool
                                                          DWMWINDOWATTRIBUTE attribute,
                                                          ref DWM_WINDOW_CORNER_PREFERENCE pvAttribute,
                                                          uint cbAttribute);
+        #endregion
+
+        public ChatToolContext context = new();
         public MainWindow()
         {
             InitializeComponent();
             DataContext = context;
 
+            #region Windows 11 Corner Rounding
             IntPtr hWnd = new WindowInteropHelper(GetWindow(this)).EnsureHandle();
             var attribute = DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE;
             var preference = DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND;
             DwmSetWindowAttribute(hWnd, attribute, ref preference, sizeof(uint));
+            #endregion
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
