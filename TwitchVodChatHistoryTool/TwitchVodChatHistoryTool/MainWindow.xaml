@@ -38,7 +38,7 @@
                         <ColumnDefinition Width="50*"/>
                     </Grid.ColumnDefinitions>
                     <mah:DateTimePicker Grid.Column="0" mah:TextBoxHelper.Watermark="Start time filter..." SelectedDateTime="{Binding VideoStartFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsClockVisible="False"/>
-                    <mah:DateTimePicker Grid.Column="1" mah:TextBoxHelper.Watermark="End time filter..." SelectedDateTime="{Binding VideoEndFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
+                    <mah:DateTimePicker Grid.Column="1" mah:TextBoxHelper.Watermark="End time filter..." SelectedDateTime="{Binding VideoEndFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsClockVisible="False" Margin="5,0,0,0"/>
                 </Grid>
                 <TextBox x:Name="VODFilterTextBox" mah:TextBoxHelper.Watermark="Filter on VOD name..." Text="{Binding VideoTitleFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,94,0,0" TextWrapping="NoWrap" VerticalAlignment="Top"/>
                 <ListBox x:Name="VideosListBox" SelectionChanged="ListBox_SelectionChanged" ItemsSource="{Binding FilteredVideos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Title" Margin="0,160,0,0"/>
