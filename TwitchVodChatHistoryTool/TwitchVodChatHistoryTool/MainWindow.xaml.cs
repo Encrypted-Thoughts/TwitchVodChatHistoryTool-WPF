@@ -122,54 +122,58 @@ namespace TwitchVodChatHistoryTool
 
         private void DownloadJsonButton_Click(object sender, RoutedEventArgs e)
         {
-            if (VideosListBox.SelectedItem is Video video)
+            try
             {
-                var invalids = Path.GetInvalidFileNameChars();
-                var title = string.Join("_", video.Title.Split(invalids, StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.');
-
-                var dlg = new SaveFileDialog
+                if (VideosListBox.SelectedItem is Video video)
                 {
-                    FileName = title,
-                    DefaultExt = ".json",
-                    Filter = "Json files (*.json)|*.json"
-                };
+                    var invalids = Path.GetInvalidFileNameChars();
+                    var title = string.Join("_", video.Title.Split(invalids, StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.');
 
-                var result = dlg.ShowDialog();
+                    var dlg = new SaveFileDialog
+                    {
+                        FileName = title,
+                        DefaultExt = ".json",
+                        Filter = "Json files (*.json)|*.json"
+                    };
 
-                if (result == true)
-                {
-                    var json = JsonSerializer.Serialize(context.FilteredComments);
-                    var filename = dlg.FileName;
-
-                    File.WriteAllText(filename, json);
+                    if (dlg.ShowDialog() == true)
+                        File.WriteAllText(dlg.FileName, JsonSerializer.Serialize(context.FilteredComments));
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
         private void DownloadCSVButton_Click(object sender, RoutedEventArgs e)
         {
-            if (VideosListBox.SelectedItem is Video video)
+            try
             {
-                var invalids = Path.GetInvalidFileNameChars();
-                var title = string.Join("_", video.Title.Split(invalids, StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.');
-
-                var dlg = new SaveFileDialog
+                if (VideosListBox.SelectedItem is Video video)
                 {
-                    FileName = title,
-                    DefaultExt = ".csv",
-                    Filter = "CSV files (*.csv)|*.csv"
-                };
+                    var invalids = Path.GetInvalidFileNameChars();
+                    var title = string.Join("_", video.Title.Split(invalids, StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.');
 
-                var result = dlg.ShowDialog();
+                    var dlg = new SaveFileDialog
+                    {
+                        FileName = title,
+                        DefaultExt = ".csv",
+                        Filter = "CSV files (*.csv)|*.csv"
+                    };
 
-                if (result == true)
-                {
-                    var filename = dlg.FileName;
-                    using TextWriter tw = new StreamWriter(filename);
-                    tw.WriteLine("Timestamp,Username,Message");
-                    foreach (var comment in context.FilteredComments)
-                        tw.WriteLine($"{comment.Timestamp},{comment.Username},{comment.Message}");
+                    if (dlg.ShowDialog() == true)
+                    {
+                        using TextWriter tw = new StreamWriter(dlg.FileName);
+                        tw.WriteLine("Timestamp,Username,Message");
+                        foreach (var comment in context.FilteredComments)
+                            tw.WriteLine($"{comment.Timestamp},{comment.Username},{comment.Message}");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }
