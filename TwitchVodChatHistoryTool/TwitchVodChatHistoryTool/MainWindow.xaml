@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Twitch Vod Chat History Tool" 
@@ -51,14 +52,28 @@
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="300*"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
+                <Grid Grid.Row="0" Margin="0,0,122,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="275*"/>
-                        <ColumnDefinition Width="275*"/>
+                        <ColumnDefinition Width="270*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="270*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="UsernameFilterTextbox" Grid.Column="0" mah:TextBoxHelper.Watermark="Filter on username..." Text="{Binding CommentUsernameFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" Height="25" VerticalAlignment="Top"/>
-                    <TextBox x:Name="MessageFilterTextBox" Grid.Column="1" mah:TextBoxHelper.Watermark="Filter on message..." Text="{Binding CommentMessageFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" Margin="5,0,0,0" Height="25" VerticalAlignment="Top"/>
+                    <TextBox x:Name="UsernameFilterTextbox" Grid.Column="0" mah:TextBoxHelper.Watermark="Filter on username..." Text="{Binding CommentUsernameFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" Height="25" VerticalAlignment="Top" Margin="0,0,10,0" Grid.ColumnSpan="2"/>
+                    <GridSplitter Grid.Column="1" ResizeDirection="Columns" Width="2" Margin="0,5,0,5" HorizontalAlignment="Center"/>
+                    <TextBox x:Name="MessageFilterTextBox" Grid.Column="1" mah:TextBoxHelper.Watermark="Filter on message..." Text="{Binding CommentMessageFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" Margin="10,0,0,0" Height="25" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
                 </Grid>
+                <Button x:Name="DownloadJsonButton" VerticalAlignment="Top" HorizontalAlignment="Right" Height="24" Width="56" Margin="0,0,61,0" Click="DownloadJsonButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="JSON" Margin="0,0,5,0" VerticalAlignment="Center" />
+                        <iconPacks:FontAwesome Kind="SaveRegular" Height="11"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="DownloadCSVButton" VerticalAlignment="Top" HorizontalAlignment="Right" Height="24" Width="56" Click="DownloadCSVButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="CSV" Margin="0,0,5,0" VerticalAlignment="Center" />
+                        <iconPacks:FontAwesome Kind="SaveRegular" Height="11"/>
+                    </StackPanel>
+                </Button>
                 <DataGrid ItemsSource="{Binding FilteredComments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" Grid.Row="1" IsReadOnly="True"/>
             </Grid>
         </Grid>

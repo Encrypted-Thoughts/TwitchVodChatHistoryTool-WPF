@@ -1,9 +1,12 @@
 ﻿using ChatHistory;
 using ChatHistory.Models;
+using Microsoft.Win32;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
@@ -110,6 +113,59 @@ namespace TwitchVodChatHistoryTool
         {
             //TODO: Replace twitchapps.com/tokengen with my own redirect site to show access token
             Process.Start(new ProcessStartInfo("https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=icyqwwpy744ugu5x4ymyt6jqrnpxso&redirect_uri=https://twitchapps.com/tokengen&scope=chat:read&force_verify=true") { UseShellExecute = true });
+        }
+
+        private void DownloadJsonButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (VideosListBox.SelectedItem is Video video)
+            {
+                var invalids = Path.GetInvalidFileNameChars();
+                var title = string.Join("_", video.Title.Split(invalids, StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.');
+
+                var dlg = new SaveFileDialog
+                {
+                    FileName = title,
+                    DefaultExt = ".json",
+                    Filter = "Json files (*.json)|*.json"
+                };
+
+                var result = dlg.ShowDialog();
+
+                if (result == true)
+                {
+                    var json = JsonSerializer.Serialize(context.FilteredComments);
+                    var filename = dlg.FileName;
+
+                    File.WriteAllText(filename, json);
+                }
+            }
+        }
+
+        private void DownloadCSVButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (VideosListBox.SelectedItem is Video video)
+            {
+                var invalids = Path.GetInvalidFileNameChars();
+                var title = string.Join("_", video.Title.Split(invalids, StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.');
+
+                var dlg = new SaveFileDialog
+                {
+                    FileName = title,
+                    DefaultExt = ".csv",
+                    Filter = "CSV files (*.csv)|*.csv"
+                };
+
+                var result = dlg.ShowDialog();
+
+                if (result == true)
+                {
+                    var filename = dlg.FileName;
+                    using TextWriter tw = new StreamWriter(filename);
+                    tw.WriteLine("Timestamp,Username,Message");
+                    foreach (var comment in context.FilteredComments)
+                        tw.WriteLine($"{comment.Timestamp},{comment.Username},{comment.Message}");
+                }
+            }
         }
     }
 }
