@@ -59,7 +59,7 @@
                         <ColumnDefinition Width="270*"/>
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="UsernameFilterTextbox" Grid.Column="0" mah:TextBoxHelper.Watermark="Filter on username..." Text="{Binding CommentUsernameFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" Height="25" VerticalAlignment="Top" Margin="0,0,10,0" Grid.ColumnSpan="2"/>
-                    <GridSplitter Grid.Column="1" ResizeDirection="Columns" Width="2" Margin="0,5,0,5" HorizontalAlignment="Center"/>
+                    <GridSplitter Grid.Column="1" ResizeDirection="Columns" Width="2" Margin="0,3,0,7" HorizontalAlignment="Center"/>
                     <TextBox x:Name="MessageFilterTextBox" Grid.Column="1" mah:TextBoxHelper.Watermark="Filter on message..." Text="{Binding CommentMessageFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" Margin="10,0,0,0" Height="25" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
                 </Grid>
                 <Button x:Name="DownloadJsonButton" VerticalAlignment="Top" HorizontalAlignment="Right" Height="24" Width="56" Margin="0,0,61,0" Click="DownloadJsonButton_Click">
