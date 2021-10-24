@@ -2,7 +2,7 @@
 
 A tool to try and simplify viewing and searching through chat history on VODs.
 
-![image](https://user-images.githubusercontent.com/50642352/137990907-c8a18aad-784c-4772-a95e-ebf40c265560.png)
+![image](https://user-images.githubusercontent.com/50642352/138579494-30746139-a5b0-4a32-9d96-3716c3c2f46f.png)
 
 ## Installation
 Download latest TwitchVodChatHistoryTool.zip version from Releases.
