@@ -116,8 +116,7 @@ namespace TwitchVodChatHistoryTool
 
         private void GetAccessTokenButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: Replace twitchapps.com/tokengen with my own redirect site to show access token
-            Process.Start(new ProcessStartInfo("https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=icyqwwpy744ugu5x4ymyt6jqrnpxso&redirect_uri=https://twitchapps.com/tokengen&scope=chat:read&force_verify=true") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=icyqwwpy744ugu5x4ymyt6jqrnpxso&redirect_uri=https://encrypted-thoughts.github.io/auth&scope=chat:read&force_verify=true") { UseShellExecute = true });
         }
 
         private void DownloadJsonButton_Click(object sender, RoutedEventArgs e)
