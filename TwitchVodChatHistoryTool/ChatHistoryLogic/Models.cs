@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 
 namespace ChatHistory.Models
 {
@@ -19,77 +17,102 @@ namespace ChatHistory.Models
         public string Message { get; set; }
     }
 
-    public class CommentContainer
+    public class CommentVideoContainer
     {
-        [JsonProperty("comments")]
-        public Comment[] Comments { get; set; }
-        [JsonProperty("_next")]
-        public string Next { get; set; }
+        public Data data { get; set; }
+        public Extensions extensions { get; set; }
     }
 
-    public class Comment
+    public class Data
     {
-        [JsonProperty("_id")]
-        public string Id { get; set; }
-        [JsonProperty("created_at")]
-        public DateTime CreatedAt { get; set; }
-        [JsonProperty("updated_at")]
-        public DateTime UpdatedAt { get; set; }
-        [JsonProperty("channel_id")]
-        public string ChannelId { get; set; }
-        [JsonProperty("content_type")]
-        public string ContentType { get; set; }
-        [JsonProperty("content_id")]
-        public string ContentId { get; set; }
-        [JsonProperty("content_offset_seconds")]
-        public float ContentOffsetSeconds { get; set; }
-        [JsonProperty("commenter")]
-        public Commenter Commenter { get; set; }
-        [JsonProperty("source")]
-        public string Source { get; set; }
-        [JsonProperty("state")]
-        public string State { get; set; }
-        [JsonProperty("message")]
-        public Message Message { get; set; }
+        public CommentVideo video { get; set; }
+    }
+
+    public class CommentVideo
+    {
+        public string id { get; set; }
+        public Creator creator { get; set; }
+        public Comments comments { get; set; }
+    }
+
+    public class Creator
+    {
+        public string id { get; set; }
+        public Channel channel { get; set; }
+    }
+
+    public class Channel
+    {
+        public string id { get; set; }
+    }
+
+    public class Comments
+    {
+        public Edge[] edges { get; set; }
+        public Pageinfo pageInfo { get; set; }
+    }
+
+    public class Pageinfo
+    {
+        public bool hasNextPage { get; set; }
+        public bool hasPreviousPage { get; set; }
+    }
+
+    public class Edge
+    {
+        public string cursor { get; set; }
+        public Node node { get; set; }
+    }
+
+    public class Node
+    {
+        public string id { get; set; }
+        public Commenter commenter { get; set; }
+        public int contentOffsetSeconds { get; set; }
+        public DateTime createdAt { get; set; }
+        public Message message { get; set; }
     }
 
     public class Commenter
     {
-        [JsonProperty("display_name")]
-        public string DisplayName { get; set; }
-        [JsonProperty("_id")]
-        public string Id { get; set; }
-        [JsonProperty("name")]
-        public string Name { get; set; }
-        [JsonProperty("type")]
-        public string Type { get; set; }
-        [JsonProperty("bio")]
-        public string Bio { get; set; }
-        [JsonProperty("created_at")]
-        public DateTime CreatedAt { get; set; }
-        [JsonProperty("updated_at")]
-        public DateTime UpdatedAt { get; set; }
-        [JsonProperty("logo")]
-        public string Logo { get; set; }
+        public string id { get; set; }
+        public string login { get; set; }
+        public string displayName { get; set; }
     }
 
     public class Message
     {
-        [JsonProperty("body")]
-        public string Body { get; set; }
-        [JsonProperty("is_action")]
-        public bool IsAction { get; set; }
-        [JsonProperty("user_badges")]
-        public User_Badges[] UserBadges { get; set; }
-        [JsonProperty("user_color")]
-        public string UserColor { get; set; }
+        public Fragment[] fragments { get; set; }
+        public Userbadge[] userBadges { get; set; }
+        public string userColor { get; set; }
     }
 
-    public class User_Badges
+    public class Fragment
     {
-        [JsonProperty("_id")]
-        public string Id { get; set; }
-        [JsonProperty("version")]
-        public string Version { get; set; }
+        public Emote emote { get; set; }
+        public string text { get; set; }
     }
+
+    public class Emote
+    {
+        public string id { get; set; }
+        public string emoteID { get; set; }
+        public int from { get; set; }
+        public string name { get; set; }
+    }
+
+    public class Userbadge
+    {
+        public string id { get; set; }
+        public string setID { get; set; }
+        public string version { get; set; }
+    }
+
+    public class Extensions
+    {
+        public int durationMilliseconds { get; set; }
+        public string operationName { get; set; }
+        public string requestID { get; set; }
+    }
+
 }
