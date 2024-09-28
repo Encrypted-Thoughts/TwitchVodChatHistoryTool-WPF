@@ -93,9 +93,10 @@ namespace ChatHistory
         {
             var comments = new List<SimplifiedComment>();
             var baseUrl = $"https://gql.twitch.tv/gql";
-
             var offset = 0;
+
             int previous;
+            var hasNextPage = true;
             do
             {
                 previous = offset;
@@ -128,10 +129,11 @@ namespace ChatHistory
                         comments.Add(simplified);
                         offset = comment.node.contentOffsetSeconds;
                     }
+                    hasNextPage = result.data.video.comments.pageInfo.hasNextPage;
                 }
                 else break;
             }
-            while (offset != previous);
+            while (offset != previous && hasNextPage);
             return comments;
         }
 
